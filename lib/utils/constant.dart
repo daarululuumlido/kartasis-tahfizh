@@ -1,9 +1,10 @@
 //With PHP backend
-const BASE_URL = "https://meetmighty.com/mightywebbuilder";
+const BASE_URL = "https://backkartasis.tahfizhdulido.com/";
 
 //without PHP backend
 const PURCHASE_CODE = '';
-const BASE_URL_OFFLINE = 'https://meetmighty.com/mightyweb-public/view/getjson.php?user=$PURCHASE_CODE';
+const BASE_URL_OFFLINE =
+    'https://meetmighty.com/mightyweb-public/view/getjson.php?user=$PURCHASE_CODE';
 
 //preference
 const mOneSignalID = 'ADD YOUR ONESIGNAL KEY';
@@ -143,7 +144,8 @@ const NAVIGATION_STYLE_SIDE_DRAWER = "sidedrawer";
 const NAVIGATION_STYLE_BOTTOM_NAVIGATION = "bottom_navigation";
 const NAVIGATION_STYLE_FULL_SCREEN = "fullscreen";
 const NAVIGATION_STYLE_TAB_BAR = "tabs";
-const NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER = "sidedrawer_bottom_navigation";
+const NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER =
+    "sidedrawer_bottom_navigation";
 
 const SIMPLE_TAB = "simple_tab";
 const TAB_WITH_ICON = "tab_with_icon";

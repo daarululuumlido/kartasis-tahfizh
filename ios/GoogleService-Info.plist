@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>250814069995-b9257h05mbvr4mtn171u0639ss5bg7kt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.250814069995-b9257h05mbvr4mtn171u0639ss5bg7kt</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDa395j6KUSUXpVDLcB3zrxreY1ihq4suc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>250814069995</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kartasisapp.dulido</string>
+	<key>PROJECT_ID</key>
+	<string>kartasis-ptq</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kartasis-ptq.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:250814069995:ios:713c40bec14895450952ae</string>
+</dict>
+</plist>

@@ -30,7 +30,8 @@ class FloatingComponentState extends State<FloatingComponent> {
   init() async {
     //
     Iterable mFloating = jsonDecode(getStringAsync(FLOATING_DATA));
-    mFloatingList = mFloating.map((model) => FloatingButton.fromJson(model)).toList();
+    mFloatingList =
+        mFloating.map((model) => FloatingButton.fromJson(model)).toList();
   }
 
   @override
@@ -66,7 +67,10 @@ class FloatingComponentState extends State<FloatingComponent> {
                   launchUrl(Uri.parse(mFloatingList[i].url!));
                 }
               } else {
-                WebScreen(mHeading: mFloatingList[i].title, mInitialUrl: mFloatingList[i].url).launch(context, isNewTask: true);
+                WebScreen(
+                        mHeading: mFloatingList[i].title,
+                        mInitialUrl: mFloatingList[i].url)
+                    .launch(context, isNewTask: true);
               }
             },
           )
@@ -78,12 +82,13 @@ class FloatingComponentState extends State<FloatingComponent> {
     return SpeedDial(
       icon: Icons.add,
       activeIcon: Icons.close_sharp,
-      child: cachedImage(getStringAsync(FLOATING_LOGO), color: white).paddingAll(16),
+      child: cachedImage(getStringAsync(FLOATING_LOGO), color: white)
+          .paddingAll(16),
       visible: true,
       closeManually: true,
       useRotationAnimation: true,
       renderOverlay: false,
-      curve: Curves.bounceIn,
+      curve: Curves.bounceOut,
       overlayOpacity: 0.5,
       backgroundColor: appStore.primaryColors,
       foregroundColor: white,
@@ -96,7 +101,9 @@ class FloatingComponentState extends State<FloatingComponent> {
               color: context.scaffoldBackgroundColor,
               clipBehavior: Clip.antiAlias,
               elevation: 4.0,
-              child: cachedImage(mFloatingList[i].image, width: 20, height: 20, color: context.iconColor).paddingAll(10),
+              child: cachedImage(mFloatingList[i].image,
+                      width: 20, height: 20, color: context.iconColor)
+                  .paddingAll(10),
             ),
             label: mFloatingList[i].title,
             labelStyle: primaryTextStyle(),
@@ -122,7 +129,10 @@ class FloatingComponentState extends State<FloatingComponent> {
                   launchUrl(Uri.parse(mFloatingList[i].url!));
                 }
               } else {
-                WebScreen(mHeading: mFloatingList[i].title, mInitialUrl: mFloatingList[i].url).launch(context, isNewTask: true);
+                WebScreen(
+                        mHeading: mFloatingList[i].title,
+                        mInitialUrl: mFloatingList[i].url)
+                    .launch(context, isNewTask: false);
               }
             },
           ),
@@ -132,6 +142,8 @@ class FloatingComponentState extends State<FloatingComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return getStringAsync(FLOATING_STYLE) == "regular" ? mMenuWidget(context) : mCircleWidget();
+    return getStringAsync(FLOATING_STYLE) == "regular"
+        ? mMenuWidget(context)
+        : mCircleWidget();
   }
 }

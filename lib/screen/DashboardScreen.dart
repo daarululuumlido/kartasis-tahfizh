@@ -36,13 +36,19 @@ class DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   init() async {
-    setStatusBarColor(appStore.primaryColors, statusBarBrightness: Brightness.light);
+    setStatusBarColor(appStore.primaryColors,
+        statusBarBrightness: Brightness.light);
 
-    if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
+    if (getStringAsync(NAVIGATIONSTYLE) ==
+        NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
       Iterable mBottom = jsonDecode(getStringAsync(MENU_STYLE));
-      mBottomMenuList = mBottom.map((model) => MenuStyle.fromJson(model)).toList();
+      mBottomMenuList =
+          mBottom.map((model) => MenuStyle.fromJson(model)).toList();
 
-      if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER && mBottomMenuList.isNotEmpty && mBottomMenuList != null) {
+      if (getStringAsync(NAVIGATIONSTYLE) ==
+              NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER &&
+          mBottomMenuList.isNotEmpty &&
+          mBottomMenuList != null) {
         for (int i = 0; i < mBottomMenuList.length; i++) {
           widgets.add(HomeScreen(mUrl: mBottomMenuList[i].url));
         }
@@ -51,8 +57,12 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       }
     } else {
       Iterable mBottom = jsonDecode(getStringAsync(BOTTOMMENU));
-      mBottomMenuList = mBottom.map((model) => MenuStyle.fromJson(model)).toList();
-      if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION && mBottomMenuList.isNotEmpty && mBottomMenuList != null) {
+      mBottomMenuList =
+          mBottom.map((model) => MenuStyle.fromJson(model)).toList();
+      if (getStringAsync(NAVIGATIONSTYLE) ==
+              NAVIGATION_STYLE_BOTTOM_NAVIGATION &&
+          mBottomMenuList.isNotEmpty &&
+          mBottomMenuList != null) {
         for (int i = 0; i < appStore.mBottomNavigationList.length; i++) {
           widgets.add(HomeScreen(mUrl: mBottomMenuList[i].url));
         }
@@ -76,7 +86,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   Widget mBottomStyle() {
-    if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
+    if (getStringAsync(NAVIGATIONSTYLE) ==
+        NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
       if (getStringAsync(BOTTOM_NAVIGATION_STYLE) == BOTTOM_NAVIGATION_1)
         return BottomNavigationComponent3();
       else if (getStringAsync(BOTTOM_NAVIGATION_STYLE) == BOTTOM_NAVIGATION2)
@@ -95,8 +106,12 @@ class DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER ||
-            getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION && mBottomMenuList.isNotEmpty && mBottomMenuList != null
+    return getStringAsync(NAVIGATIONSTYLE) ==
+                NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER ||
+            getStringAsync(NAVIGATIONSTYLE) ==
+                    NAVIGATION_STYLE_BOTTOM_NAVIGATION &&
+                mBottomMenuList.isNotEmpty &&
+                mBottomMenuList != null
         ? Scaffold(
             backgroundColor: context.scaffoldBackgroundColor,
             bottomNavigationBar: getStringAsync(ADD_TYPE) != NONE
@@ -104,7 +119,12 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                     height: 118,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [showBannerAds(), Align(alignment: Alignment.bottomCenter, child: mBottomStyle())],
+                      children: [
+                        showBannerAds(),
+                        Align(
+                            alignment: Alignment.bottomCenter,
+                            child: mBottomStyle())
+                      ],
                     ),
                   )
                 : mBottomStyle(),

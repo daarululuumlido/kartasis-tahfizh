@@ -36,7 +36,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => new _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   InAppWebViewController? webViewController;
   ReceivePort _port = ReceivePort();
   PullToRefreshController? pullToRefreshController;
@@ -56,8 +57,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         allowFileAccessFromFileURLs: true,
         useOnDownloadStart: true,
         javaScriptCanOpenWindowsAutomatically: true,
-        javaScriptEnabled: getStringAsync(IS_JAVASCRIPT_ENABLE) == "true" ? true : false,
-        supportZoom: getStringAsync(IS_ZOOM_FUNCTIONALITY) == "true" ? true : false,
+        javaScriptEnabled:
+            getStringAsync(IS_JAVASCRIPT_ENABLE) == "true" ? true : false,
+        supportZoom:
+            getStringAsync(IS_ZOOM_FUNCTIONALITY) == "true" ? true : false,
         incognito: getStringAsync(IS_COOKIE) == "true" ? true : false),
     android: AndroidInAppWebViewOptions(useHybridComposition: true),
     ios: IOSInAppWebViewOptions(allowsInlineMediaPlayback: true),
@@ -66,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void _getInstanceId() async {
     await Firebase.initializeApp();
     FirebaseInAppMessaging.instance.triggerEvent("");
-    FirebaseMessaging.instance.sendMessage();
+    //FirebaseMessaging.instance.sendMessage();
     FirebaseMessaging.instance.getInitialMessage();
   }
 
@@ -117,7 +120,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     if (Platform.isIOS) {
       String? referralCode = getReferralCodeFromNative();
       if (referralCode!.isNotEmpty) {
-        if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION) {
+        if (getStringAsync(NAVIGATIONSTYLE) ==
+            NAVIGATION_STYLE_BOTTOM_NAVIGATION) {
           mInitialUrl = widget.mUrl;
         } else {
           mInitialUrl = getStringAsync(URL);
@@ -128,22 +132,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     } else {
       List<MenuStyle> mBottomMenuList = [];
 
-      if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
+      if (getStringAsync(NAVIGATIONSTYLE) ==
+          NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
         Iterable mBottom = jsonDecode(getStringAsync(MENU_STYLE));
-        mBottomMenuList = mBottom.map((model) => MenuStyle.fromJson(model)).toList();
+        mBottomMenuList =
+            mBottom.map((model) => MenuStyle.fromJson(model)).toList();
       } else {
         Iterable mBottom = jsonDecode(getStringAsync(BOTTOMMENU));
-        mBottomMenuList = mBottom.map((model) => MenuStyle.fromJson(model)).toList();
+        mBottomMenuList =
+            mBottom.map((model) => MenuStyle.fromJson(model)).toList();
       }
 
       if (appStore.deepLinkURL.isEmptyOrNull) {
-        if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION || getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
+        if (getStringAsync(NAVIGATIONSTYLE) ==
+                NAVIGATION_STYLE_BOTTOM_NAVIGATION ||
+            getStringAsync(NAVIGATIONSTYLE) ==
+                NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER) {
           if (mBottomMenuList != null && mBottomMenuList.isNotEmpty) {
             mInitialUrl = widget.mUrl;
           } else {
             mInitialUrl = getStringAsync(URL);
           }
-        } else if (getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_TAB_BAR) {
+        } else if (getStringAsync(NAVIGATIONSTYLE) ==
+            NAVIGATION_STYLE_TAB_BAR) {
           log(widget.mUrl);
           if (mTabList.isNotEmpty && mTabList != null) {
             mInitialUrl = widget.mUrl;
@@ -160,18 +171,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
 
     if (webViewController != null) {
-      await webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse(mInitialUrl!)));
+      await webViewController!
+          .loadUrl(urlRequest: URLRequest(url: Uri.parse(mInitialUrl!)));
     } else {
       log("sorry");
     }
 
     pullToRefreshController = PullToRefreshController(
-      options: PullToRefreshOptions(color: appStore.primaryColors, enabled: getStringAsync(IS_PULL_TO_REFRESH) == "true" ? true : false),
+      options: PullToRefreshOptions(
+          color: appStore.primaryColors,
+          enabled: getStringAsync(IS_PULL_TO_REFRESH) == "true" ? true : false),
       onRefresh: () async {
         if (Platform.isAndroid) {
           webViewController?.reload();
         } else if (Platform.isIOS) {
-          webViewController?.loadUrl(urlRequest: URLRequest(url: await webViewController?.getUrl()));
+          webViewController?.loadUrl(
+              urlRequest: URLRequest(url: await webViewController?.getUrl()));
         }
       },
     );
@@ -212,7 +227,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               future: Future.delayed(Duration(milliseconds: 200)),
               builder: (context, snapshot) {
                 return InAppWebView(
-                    initialUrlRequest: URLRequest(url: Uri.parse(mURL.isEmptyOrNull ? mInitialUrl.validate() : mURL!)),
+                    initialUrlRequest: URLRequest(
+                        url: Uri.parse(mURL.isEmptyOrNull
+                            ? mInitialUrl.validate()
+                            : mURL!)),
                     initialOptions: options,
                     pullToRefreshController: pullToRefreshController,
                     onWebViewCreated: (controller) {
@@ -220,23 +238,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     },
                     onLoadStart: (controller, url) {
                       log("onLoadStart");
-                      if (getStringAsync(IS_LOADER) == "true") appStore.setLoading(true);
+                      if (getStringAsync(IS_LOADER) == "true")
+                        appStore.setLoading(true);
                       setState(() {});
                     },
                     onLoadStop: (controller, url) async {
                       log("onLoadStop");
-                      if (getStringAsync(IS_LOADER) == "true") appStore.setLoading(false);
+                      if (getStringAsync(IS_LOADER) == "true")
+                        appStore.setLoading(false);
                       //webViewController!.evaluateJavascript(source: 'document.getElementsByClassName("navbar-main")[0].style.display="none";');
                       if (getStringAsync(DISABLE_HEADER) == "true") {
                         webViewController!
-                            .evaluateJavascript(source: "javascript:(function() { " + "var head = document.getElementsByTagName('header')[0];" + "head.parentNode.removeChild(head);" + "})()")
-                            .then((value) => debugPrint('Page finished loading Javascript'))
+                            .evaluateJavascript(
+                                source: "javascript:(function() { " +
+                                    "var head = document.getElementsByTagName('header')[0];" +
+                                    "head.parentNode.removeChild(head);" +
+                                    "})()")
+                            .then((value) =>
+                                debugPrint('Page finished loading Javascript'))
                             .catchError((onError) => debugPrint('$onError'));
                       }
                       if (getStringAsync(DISABLE_FOOTER) == "true") {
                         webViewController!
-                            .evaluateJavascript(source: "javascript:(function() { " + "var footer = document.getElementsByTagName('footer')[0];" + "footer.parentNode.removeChild(footer);" + "})()")
-                            .then((value) => debugPrint('Page finished loading Javascript'))
+                            .evaluateJavascript(
+                                source: "javascript:(function() { " +
+                                    "var footer = document.getElementsByTagName('footer')[0];" +
+                                    "footer.parentNode.removeChild(footer);" +
+                                    "})()")
+                            .then((value) =>
+                                debugPrint('Page finished loading Javascript'))
                             .catchError((onError) => debugPrint('$onError'));
                       }
                       pullToRefreshController!.endRefreshing();
@@ -244,11 +274,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     },
                     onLoadError: (controller, url, code, message) {
                       log("onLoadError");
-                      if (getStringAsync(IS_LOADER) == "true") appStore.setLoading(false);
+                      if (getStringAsync(IS_LOADER) == "true")
+                        appStore.setLoading(false);
                       pullToRefreshController!.endRefreshing();
                       setState(() {});
                     },
-                    shouldOverrideUrlLoading: (controller, navigationAction) async {
+                    shouldOverrideUrlLoading:
+                        (controller, navigationAction) async {
                       var uri = navigationAction.request.url;
                       var url = navigationAction.request.url.toString();
                       log("URL" + url.toString());
@@ -261,7 +293,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             return NavigationActionPolicy.CANCEL;
                           }
                         } else {
-                          String id = url.substring(url.indexOf('id%3D') + 5, url.indexOf('#Intent'));
+                          String id = url.substring(
+                              url.indexOf('id%3D') + 5, url.indexOf('#Intent'));
                           await StoreRedirect.redirect(androidAppId: id);
                           return NavigationActionPolicy.CANCEL;
                         }
@@ -277,10 +310,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           url.contains("tel:") ||
                           url.contains("share=telegram") ||
                           url.contains("messenger.com")) {
-                        if (url.contains("https://api.whatsapp.com/send?phone=+")) {
-                          url = url.replaceAll("https://api.whatsapp.com/send?phone=+", "https://api.whatsapp.com/send?phone=");
+                        if (url.contains(
+                            "https://api.whatsapp.com/send?phone=+")) {
+                          url = url.replaceAll(
+                              "https://api.whatsapp.com/send?phone=+",
+                              "https://api.whatsapp.com/send?phone=");
                         } else if (url.contains("whatsapp://send/?phone=%20")) {
-                          url = url.replaceAll("whatsapp://send/?phone=%20", "whatsapp://send/?phone=");
+                          url = url.replaceAll("whatsapp://send/?phone=%20",
+                              "whatsapp://send/?phone=");
                         }
                         if (!url.contains("whatsapp://")) {
                           url = Uri.encodeFull(url);
@@ -296,7 +333,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           launchUrl(Uri.parse(url));
                           return NavigationActionPolicy.CANCEL;
                         }
-                      } else if (!["http", "https", "chrome", "data", "javascript", "about"].contains(uri!.scheme)) {
+                      } else if (![
+                        "http",
+                        "https",
+                        "chrome",
+                        "data",
+                        "javascript",
+                        "about"
+                      ].contains(uri!.scheme)) {
                         if (await canLaunchUrl(Uri.parse(url))) {
                           await launchUrl(Uri.parse(url));
                           return NavigationActionPolicy.CANCEL;
@@ -307,11 +351,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     onDownloadStart: (controller, url) {
                       launchUrl(Uri.parse(url.toString()));
                     },
-                    androidOnGeolocationPermissionsShowPrompt: (InAppWebViewController controller, String origin) async {
+                    androidOnGeolocationPermissionsShowPrompt:
+                        (InAppWebViewController controller,
+                            String origin) async {
                       await Permission.location.request();
-                      return Future.value(GeolocationPermissionShowPromptResponse(origin: origin, allow: true, retain: true));
+                      return Future.value(
+                          GeolocationPermissionShowPromptResponse(
+                              origin: origin, allow: true, retain: true));
                     },
-                    androidOnPermissionRequest: (InAppWebViewController controller, String origin, List<String> resources) async {
+                    androidOnPermissionRequest:
+                        (InAppWebViewController controller, String origin,
+                            List<String> resources) async {
                       if (resources.length >= 1) {
                       } else {
                         resources.forEach((element) async {
@@ -323,11 +373,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           }
                         });
                       }
-                      return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
+                      return PermissionRequestResponse(
+                          resources: resources,
+                          action: PermissionRequestResponseAction.GRANT);
                     }).visible(isWasConnectionLoss == false);
               }),
           //NoInternetConnection().visible(isWasConnectionLoss == true),
-          Container(color: Colors.white, height: context.height(), width: context.width(), child: Loaders(name: appStore.loaderValues).center()).visible(appStore.isLoading)
+          Container(
+                  color: Colors.white,
+                  height: context.height(),
+                  width: context.width(),
+                  child: Loaders(name: appStore.loaderValues).center())
+              .visible(appStore.isLoading)
         ],
       );
     }
@@ -338,56 +395,77 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         bottom: true,
         child: Scaffold(
           drawerEdgeDragWidth: 0,
-          appBar: getStringAsync(NAVIGATIONSTYLE) != NAVIGATION_STYLE_FULL_SCREEN
-              ? PreferredSize(
-                  child: AppBarComponent(
-                    onTap: (value) {
-                      if (value == RIGHT_ICON_RELOAD) {
-                        webViewController!.reload();
-                      }
-                      if (RIGHT_ICON_SHARE == value) {
-                        Share.share(getStringAsync(SHARE_CONTENT));
-                      }
-                      if (RIGHT_ICON_CLOSE == value || LEFT_ICON_CLOSE == value) {
-                        if (getStringAsync(IS_Exit_POP_UP) == "true") {
-                          mConfirmationDialog(() {
-                            Navigator.of(context).pop(false);
-                          }, context, appLocalization);
-                        }
-                      }
-                      if (LEFT_ICON_BACK_1 == value) {
-                        finish(context);
-                      }
-                      if (LEFT_ICON_BACK_2 == value) {
-                        finish(context);
-                      }
-                      if (LEFT_ICON_HOME == value) {
-                        DashBoardScreen().launch(context);
-                      }
-                    },
-                  ),
-                  preferredSize: Size.fromHeight(getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_TAB_BAR && appStore.mTabList.length != 0 ? 100.0 : 60.0))
-              : PreferredSize(
-                  child: SizedBox(),
-                  preferredSize: Size.fromHeight(0.0),
-                ),
-          floatingActionButton: getStringAsync(IS_FLOATING) == "true" ? FloatingComponent() : SizedBox(),
+          appBar:
+              getStringAsync(NAVIGATIONSTYLE) != NAVIGATION_STYLE_FULL_SCREEN
+                  ? PreferredSize(
+                      child: AppBarComponent(
+                        onTap: (value) {
+                          if (value == RIGHT_ICON_RELOAD) {
+                            webViewController!.reload();
+                          }
+                          if (RIGHT_ICON_SHARE == value) {
+                            Share.share(getStringAsync(SHARE_CONTENT));
+                          }
+                          if (RIGHT_ICON_CLOSE == value ||
+                              LEFT_ICON_CLOSE == value) {
+                            if (getStringAsync(IS_Exit_POP_UP) == "true") {
+                              mConfirmationDialog(() {
+                                Navigator.of(context).pop(false);
+                              }, context, appLocalization);
+                            }
+                          }
+                          if (LEFT_ICON_BACK_1 == value) {
+                            finish(context);
+                          }
+                          if (LEFT_ICON_BACK_2 == value) {
+                            finish(context);
+                          }
+                          if (LEFT_ICON_HOME == value) {
+                            DashBoardScreen().launch(context);
+                          }
+                        },
+                      ),
+                      preferredSize: Size.fromHeight(
+                          getStringAsync(NAVIGATIONSTYLE) ==
+                                      NAVIGATION_STYLE_TAB_BAR &&
+                                  appStore.mTabList.length != 0
+                              ? 100.0
+                              : 60.0))
+                  : PreferredSize(
+                      child: SizedBox(),
+                      preferredSize: Size.fromHeight(0.0),
+                    ),
+          floatingActionButton: getStringAsync(IS_FLOATING) == "true"
+              ? FloatingComponent()
+              : SizedBox(),
           drawer: Drawer(
             child: SideMenuComponent(onTap: () {
-              mInitialUrl = getStringAsync(URL).isNotEmpty ? getStringAsync(URL) : "https://www.google.com";
+              mInitialUrl = getStringAsync(URL).isNotEmpty
+                  ? getStringAsync(URL)
+                  : "https://www.google.com";
               webViewController!.reload();
             }),
-          ).visible(getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_SIDE_DRAWER || getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER),
-          body: getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_TAB_BAR && mTabList != null && appStore.mTabList.length != 0
+          ).visible(
+              getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_SIDE_DRAWER ||
+                  getStringAsync(NAVIGATIONSTYLE) ==
+                      NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER),
+          body: getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_TAB_BAR &&
+                  mTabList != null &&
+                  appStore.mTabList.length != 0
               ? TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                   children: [
-                    for (int i = 0; i < mTabList.length; i++) mLoadWeb(mURL: mTabList[i].url),
+                    for (int i = 0; i < mTabList.length; i++)
+                      mLoadWeb(mURL: mTabList[i].url),
                   ],
                 )
               : mLoadWeb(mURL: mInitialUrl),
-          bottomNavigationBar:
-              getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION || getStringAsync(NAVIGATIONSTYLE) == NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER ? SizedBox() : showBannerAds(),
+          bottomNavigationBar: getStringAsync(NAVIGATIONSTYLE) ==
+                      NAVIGATION_STYLE_BOTTOM_NAVIGATION ||
+                  getStringAsync(NAVIGATIONSTYLE) ==
+                      NAVIGATION_STYLE_BOTTOM_NAVIGATION_SIDE_DRAWER
+              ? SizedBox()
+              : showBannerAds(),
         ),
       );
     }

@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mighty Web</string>
+	<string>Kartasis</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,15 +28,15 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.mighty.web</string>
+			<string>com.kartasis.dulido</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>mightyweb</string>
+				<string>kartasis</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -51,16 +53,18 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play using while you are hiking</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Mighty Web app requires access to the Camera to upload your photo.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Mighty Web app requires access to microphone when you will be used to record your speech at time of  press the &quot;Mic&quot; button.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Mighty Web requires access to the local network</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Mighty Web requires address permission access to get the current location of the user.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Mighty Web requires address permission access to get the current location of the user.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Mighty Web app requires access to microphone when you will be used to record your speech at time of  press the "Mic" button.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Mighty Web requires access to the photo library to upload your photo.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -74,9 +78,6 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
-		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
@@ -99,8 +100,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
-	<true/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 </dict>
 </plist>
